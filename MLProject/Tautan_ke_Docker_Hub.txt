@@ -1,2 +1,2 @@
 Tautan Docker Hub:
-https://hub.docker.com/repository/docker/<USERNAME_DOCKER_ANDA>/telco-churn-model
+https://hub.docker.com/repository/docker/alfinhimawan/telco-churn-model
