@@ -106,11 +106,12 @@ jobs:
           cd MLProject
           RUN_ID=$(cat mlflow_run_id.txt 2>/dev/null || echo "")
           if [ -n "${RUN_ID}" ]; then
-            mlflow models build-docker \
-              -m "runs:/${RUN_ID}/model" \
-              -n "${{ secrets.DOCKER_USERNAME }}/iris-classification:latest" \
-              --enable-mlserver \
-              --env-manager=conda
+              mlflow models generate-dockerfile \
+                -m "runs:/${RUN_ID}/model" \
+                -d docker_build_dir \
+                --enable-mlserver
+              sed -i 's|https://bootstrap.pypa.io/get-pip.py|https://bootstrap.pypa.io/pip/3.9/get-pip.py|g' docker_build_dir/Dockerfile
+              docker build -t "${{ secrets.DOCKER_USERNAME }}/iris-classification:latest" docker_build_dir
           else
             echo "Skipping Docker build: no run ID found"
           fi
