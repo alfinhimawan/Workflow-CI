@@ -109,7 +109,8 @@ jobs:
             mlflow models build-docker \
               -m "runs:/${RUN_ID}/model" \
               -n "${{ secrets.DOCKER_USERNAME }}/iris-classification:latest" \
-              --enable-mlserver
+              --enable-mlserver \
+              --env-manager=conda
           else
             echo "Skipping Docker build: no run ID found"
           fi
